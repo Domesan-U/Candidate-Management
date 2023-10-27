@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:untitled/About/about.dart';
+import 'package:untitled/OnTest/HeaderForRejection/RejectionHeader.dart';
+import 'package:untitled/constants.dart';
 import 'package:untitled/routingPage.dart';
+import 'NavBar/NavBarWidget.dart';
+import 'OnTest/TestingHomePage.dart';
+import 'homepage.dart';
 import 'login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -23,22 +29,46 @@ void main() async{
       options: FirebaseOptions(apiKey: "AIzaSyB_89GYRwgeMmdxIhLi8OB-dBWiNPAu9KA", appId: "1:912029516841:web:77e05450142b92db5c8838", messagingSenderId: "912029516841", projectId: "hr-rejection",storageBucket: "hr-rejection.appspot.com")
     );
   }
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+  MyApp({super.key});
+  final MaterialColor customSwatch = MaterialColor(
+    0xFF002147,
+    <int, Color>{
+      50: Color(0xFF002147),
+      100: Color(0xFF002147),
+      200: Color(0xFF002147),
+      300: Color(0xFF002147),
+      400: Color(0xFF002147),
+      500: Color(0xFF002147),
+      600: Color(0xFF002147),
+      700: Color(0xFF002147),
+      800: Color(0xFF002147),
+      900: Color(0xFF002147),
+    },
+  );
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     print("main");
     return MaterialApp(
       theme: ThemeData(
-            unselectedWidgetColor: Colors.black, // Change the circle color to white
+        primarySwatch: customSwatch,
+            unselectedWidgetColor: Colors.black,
+        radioTheme: RadioThemeData(
+        fillColor: MaterialStateProperty.all(selectedColor),
+      ),
+        checkboxTheme: CheckboxThemeData(
+
+          overlayColor: MaterialStateProperty.all(selectedColor)
+        )
+        // Change the circle color to white
           ),
       debugShowCheckedModeBanner: false,
-      home: RoutingPage(),
+      home:  AboutPage(),
      // title: 'Flutter Demo',
       //theme: ThemeData(
         // This is the theme of your application.

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:untitled/constants.dart';
 class TextInputCreated extends StatefulWidget {
   List<TextInputFormatter> inputFormattersC;
   IconData IconDataC;         //C- Created
@@ -22,17 +23,17 @@ class _TextInputCreatedState extends State<TextInputCreated> {
       readOnly: widget.readOnlyC??false,
       keyboardType: widget.keyboardTypeC??TextInputType.name,
       inputFormatters: widget.inputFormattersC,
-      style: TextStyle(color: Colors.black),
+      style: TextStyle(color: allColor),
       decoration: InputDecoration(
-          icon: Icon(widget.IconDataC, color: Colors.black),
+          icon: Icon(widget.IconDataC, color: allColor),
           labelText: widget.labelTextC,
           hintText: widget.hintTextC,
-          hintStyle: TextStyle(color: Colors.black),
-          labelStyle: TextStyle(color: Colors.black),
+          hintStyle: TextStyle(color: allColor),
+          labelStyle: TextStyle(color: allColor),
           enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.black)),
+              borderSide: BorderSide(color: allColor)),
           focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.black))),
+              borderSide: BorderSide(color: allColor))),
       onChanged: widget.onChangedC,
       validator: widget.ValidatorC
     );

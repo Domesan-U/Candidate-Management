@@ -3,9 +3,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:untitled/Drawer/DrawerWidget.dart';
 import 'package:untitled/routingPage.dart';
 import 'dart:io';
+import 'NavBar/NavBarWidget.dart';
 import 'constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,7 +19,7 @@ import 'TextInput.dart';
 
 
 final _firestore = FirebaseFirestore.instance;
-
+GlobalKey<ScaffoldState> scaffoldKeyForForm = GlobalKey<ScaffoldState>();
 class check extends StatefulWidget {
   const check({Key? key}) : super(key: key);
 
@@ -29,79 +32,114 @@ class _checkState extends State<check> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-      backgroundColor: Colors.black,
+      key: scaffoldKeyForForm,
+      drawer: DrawerWidget(deviceWidth: 0,deviceHeight: 0,),
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Stack(
           children: [
-            MediaQuery.of(context).size.width > 576
-                ? Row(
+            Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      color: containerBg,
+                      borderRadius: const BorderRadius.only(
+                          bottomRight: Radius.circular(50)
+                      )
+                  ),
+                  child: Stack(
                     children: [
-                      Column(children: [
-                        Container(
-                            decoration: BoxDecoration(
-                              border: Border(
-                                right: BorderSide(
-                                  color: Colors.white,
-                                  width: 4.0,
-                                ),
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Center(
+
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Text("S T O R E  H O U S E",style: GoogleFonts.yesevaOne(textStyle: TextStyle(fontWeight: FontWeight.bold),color: Colors.white),),
                               ),
                             ),
-                            height: MediaQuery.of(context).size.height,
-                            width: MediaQuery.of(context).size.width / 2,
-                            child: Image.network(
-                                "https://images.pexels.com/photos/3127880/pexels-photo-3127880.jpeg?auto=compress&cs=tinysrgb&w=600",
-                                fit: BoxFit.cover)),
-                      ]),
-                      Column(
-                        children: [
-                          Container(
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                    begin: Alignment.topRight,
-                                    end: Alignment.bottomRight,
-                                    stops: [
-                                      0.4,
-                                      0.7,
-                                      0.9
-                                    ],
-                                    colors: [
-                                      Colors.purple.shade400,
-                                      Colors.purple.shade600,
-                                      Colors.purple.shade800
-                                    ]),
-                              ),
-                              height: MediaQuery.of(context).size.height,
-                              width: MediaQuery.of(context).size.width / 2,
-                              child: inputDetails()),
-                        ],
-                      )
-                    ],
-                  )
-                : Column(
-                    children: [
-                      Container(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                begin: Alignment.topRight,
-                                end: Alignment.bottomRight,
-                                stops: [
-                                  0.4,
-                                  0.7,
-                                  0.9
-                                ],
-                                colors: [
-                                  Colors.purple.shade400,
-                                  Colors.purple.shade600,
-                                  Colors.purple.shade800
-                                ]),
+
+                          ],
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: IconButton(
+                            icon: const Icon(Icons.menu,color: Colors.white),
+                            onPressed: (){
+                              scaffoldKeyForForm.currentState?.openDrawer();
+                            },
                           ),
-                          height: MediaQuery.of(context).size.height,
-                          width: MediaQuery.of(context).size.width,
-                          child: inputDetails()),
+                        ),
+                      )
+
                     ],
                   ),
+                ),
+                Container(
+                  color: containerBg,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(50)
+                        )
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        MediaQuery.of(context).size.width > 576
+                            ? Row(
+                                children: [
+                                  Column(children: [
+                                    Container(
+                                        decoration: BoxDecoration(
+                                          border: Border(
+                                            right: BorderSide(
+                                              color: Colors.white,
+                                              width: 4.0,
+                                            ),
+                                          ),
+                                        ),
+                                        height: MediaQuery.of(context).size.height,
+                                        width: MediaQuery.of(context).size.width / 2,
+                                        child: Image.asset('images/cuteKitty.png'
+                                            )),
+                                  ]),
+                                  Column(
+                                    children: [
+                                      Container(
+                                          decoration: BoxDecoration(
+                                          ),
+                                          height: MediaQuery.of(context).size.height,
+                                          width: MediaQuery.of(context).size.width / 2,
+                                          child: inputDetails()),
+                                    ],
+                                  )
+                                ],
+                              )
+                            : Column(
+                                children: [
+                                  Container(
+                                      decoration: BoxDecoration(
+                                      ),
+                                      height: MediaQuery.of(context).size.height,
+                                      width: MediaQuery.of(context).size.width,
+                                      child: inputDetails()),
+                                ],
+                              ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+    //        Align(alignment:Alignment.bottomCenter,child: NavBar())
           ],
         ),
       ),
@@ -115,7 +153,7 @@ class inputDetails extends StatefulWidget {
   @override
   State<inputDetails> createState() => _inputDetailsState();
 }
-
+Color hintTextColor = Colors.black;
 var downloadURL = null;
 
 class _inputDetailsState extends State<inputDetails> {
@@ -255,7 +293,7 @@ class _inputDetailsState extends State<inputDetails> {
                     child: Text(
                       "Welcome",
                       style: TextStyle(
-                          color: Colors.black,
+                          color: allColor,
                           fontWeight: FontWeight.bold,
                           fontSize: 25),
                     ),
@@ -298,25 +336,25 @@ class _inputDetailsState extends State<inputDetails> {
                             child: Form(
                               key: knew_dobkey,
                               child: TextFormField(
-                                style: TextStyle(color: Colors.black),
+                                style: TextStyle(color: allColor),
                                 controller: knew_ageController,
                                 keyboardType: TextInputType.datetime,
                                 decoration: InputDecoration(
                                     icon: Icon(
                                       Icons.calendar_today,
-                                      color: Colors.black,
+                                      color: allColor,
                                     ),
                                     labelText: kIsWeb
                                         ? "Date of Birth"
                                         : "Date of birth",
-                                    hintStyle: TextStyle(color: Colors.black),
-                                    labelStyle: TextStyle(color: Colors.black),
+                                    hintStyle: TextStyle(color: allColor),
+                                    labelStyle: TextStyle(color: allColor),
                                     enabledBorder: UnderlineInputBorder(
                                         borderSide:
-                                            BorderSide(color: Colors.black)),
+                                            BorderSide(color: allColor)),
                                     focusedBorder: UnderlineInputBorder(
                                         borderSide:
-                                            BorderSide(color: Colors.black))),
+                                            BorderSide(color: allColor))),
                                 readOnly: true,
                                 onTap: () async {
                                   DateTime? pickDate = await showDatePicker(
@@ -363,7 +401,7 @@ class _inputDetailsState extends State<inputDetails> {
                             child: Text(
                               "\n\nAge: ${knew_ageDiff.toString()}",
                               textAlign: TextAlign.end,
-                              style: TextStyle(color: Colors.black),
+                              style: TextStyle(color: allColor),
                             ),
                           ),
                         ),
@@ -450,6 +488,7 @@ class _inputDetailsState extends State<inputDetails> {
                     title: Text(
                       "Not attended Interview?",
                       textAlign: TextAlign.right,
+                      style: TextStyle(color: allColor),
                     ),
                     contentPadding: EdgeInsets.zero,
                     controlAffinity: ListTileControlAffinity.trailing,
@@ -473,24 +512,24 @@ class _inputDetailsState extends State<inputDetails> {
                               Form(
                                 key: knew_interviewDateKey,
                                 child: TextFormField(
-                                  style: TextStyle(color: Colors.black),
+                                  style: TextStyle(color: allColor),
                                   controller: knew_interviewController,
                                   keyboardType: TextInputType.datetime,
                                   decoration: InputDecoration(
                                       icon: Icon(
                                         Icons.calendar_today,
-                                        color: Colors.black,
+                                        color: allColor,
                                       ),
                                       labelText: "Interview Date",
-                                      hintStyle: TextStyle(color: Colors.black),
+                                      hintStyle: TextStyle(color: allColor),
                                       labelStyle:
-                                          TextStyle(color: Colors.black),
+                                          TextStyle(color: allColor),
                                       enabledBorder: UnderlineInputBorder(
                                           borderSide:
-                                              BorderSide(color: Colors.black)),
+                                              BorderSide(color: allColor)),
                                       focusedBorder: UnderlineInputBorder(
                                           borderSide:
-                                              BorderSide(color: Colors.black))),
+                                              BorderSide(color: allColor))),
                                   readOnly: true,
                                   onTap: () async {
                                     DateTime? pickDate = await showDatePicker(
@@ -654,14 +693,14 @@ class _inputDetailsState extends State<inputDetails> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(right:18.0),
-                      child: Icon(Icons.school,color: Colors.black,),
+                      child: Icon(Icons.school,color: allColor,),
                     ),
 
                     Container(
                     //  alignment: Alignment.centerLeft,
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Colors.black,
+                          color: allColor,
                           width: 1.0,
                         ),
                         borderRadius: BorderRadius.circular(5.0),
@@ -669,11 +708,11 @@ class _inputDetailsState extends State<inputDetails> {
                       child: DropdownButton<String>(
                         icon: Icon(
                           Icons.arrow_drop_down, // Default dropdown arrow icon
-                          color: Colors.black, // Set the desired color for the arrow
+                          color: allColor, // Set the desired color for the arrow
                         ),
                         borderRadius: BorderRadius.circular(1),
                         underline: Container(),
-                        style: TextStyle(color: Colors.black), // Set the text color
+                        style: TextStyle(color: allColor), // Set the text color
                         value: selectedDegree,
                         onChanged: (String? value) {
                           setState(() {
@@ -699,13 +738,13 @@ class _inputDetailsState extends State<inputDetails> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(right:18.0),
-                          child: Icon(Icons.school,color: Colors.black,),
+                          child: Icon(Icons.school,color: allColor),
                         ),
                         Container(
                           //  alignment: Alignment.centerLeft,
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: Colors.black,
+                              color: allColor,
                               width: 1.0,
                             ),
                             borderRadius: BorderRadius.circular(5.0),
@@ -713,11 +752,11 @@ class _inputDetailsState extends State<inputDetails> {
                           child: DropdownButton<String>(
                             icon: Icon(
                               Icons.arrow_drop_down, // Default dropdown arrow icon
-                              color: Colors.black, // Set the desired color for the arrow
+                              color: allColor, // Set the desired color for the arrow
                             ),
                             borderRadius: BorderRadius.circular(1),
                             underline: Container(),
-                            style: TextStyle(color: Colors.black), // Set the text color
+                            style: TextStyle(color: allColor), // Set the text color
 
                             value: selectedExperience,
                             onChanged: (String? value) {
@@ -803,19 +842,31 @@ class _inputDetailsState extends State<inputDetails> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(bottom: 25.0),
-                        child: ElevatedButton(
-                            onPressed: selectFile,
-                            child: Text("Select Resume",
-                                style: TextStyle(color: Colors.black))),
+                        child: Container(
+                          decoration:BoxDecoration(
+                              color: containerBg,
+
+                              borderRadius: BorderRadius.circular(50)
+                          ),
+                          child: ElevatedButton(
+                              onPressed: selectFile,
+                              child: Text("Select Resume",
+                                  style: TextStyle(color: Colors.white))),
+                        ),
                       ),
                       Padding(
                           padding: const EdgeInsets.only(bottom: 25.0),
                           child: Column(
                             children: [
-                              ElevatedButton(
-                                  onPressed: uploadFile,
-                                  child: Text("Upload Resume",
-                                      style: TextStyle(color: Colors.black))),
+                              Container(
+                                decoration:BoxDecoration(
+                                 borderRadius: BorderRadius.circular(20)
+                                ),
+                                child: ElevatedButton(
+                                    onPressed: uploadFile,
+                                    child: Text("Upload Resume",
+                                        style: TextStyle(color: Colors.white))),
+                              ),
                               if (progress != 0.0)
                                 Padding(
                                   padding: const EdgeInsets.all(5.0),
@@ -846,102 +897,105 @@ class _inputDetailsState extends State<inputDetails> {
                         children: [
                           ElevatedButton(
                             onPressed: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>RoutingPage()));
+                              Navigator.pop(context);
                             }, child: Text("Back"),
                           ),
-                          ElevatedButton(
-                            onPressed: (knew_disable)?null:() {
-                              print("pressed");
-                              if (pickedFile == null || downloadURL == null || downloadURL == "") {
-                                setState(() {
-                                  knew_fileError = "Please upload Resume";
-                                  delay();
-                                });
-                          }   else if (knew_formkey.currentState!
-                                      .validate() &&
-                                  knew_ageDiff > 17 &&
-                                  knew_yoexp!="" && knew_degree!=""&&
-                                  kSelectedItems.isNotEmpty &&
-                                  downloadURL != null &&
-                                  knew_dob != null && knew_statusRadiobox!=-1 &&
-                                  ((knew_statusRadiobox != 2)
-                                      ? knew_interviewDate == null
-                                      : knew_interviewDate != null)) {
-                                print("selectedITems $kSelectedItems");
-                                      _firestore
-                                          .collection("applicants")
-                                          .doc("$knew_email")
-                                          .set({
-                                        'applic_detail': {
-                                          "rollno": knew_rollno.trim().toLowerCase(),
-                                          "name": knew_name.trim().toLowerCase(),
-                                          "college": knew_collegename.trim().toLowerCase(),
-                                          "exp": knew_yoexp,
-                                          "url": downloadURL,
-                                          "degree": knew_degree.trim().toLowerCase(),
-                                          "position": knew_pos.trim().toLowerCase(),
-                                          "phone": knew_ph,
-                                          "email": knew_email.trim().toLowerCase(),
-                                          "passedOut": knew_passedout,
-                                          "age": knew_ageDiff,
-                                          "skills": kSelectedItems,
-                                          "status": knew_statusRadiobox,
-                                          "interviewDate":
-                                              knew_interviewDate ?? null
-                                        }
-                                      }).whenComplete(() {
-                                        setState(() {
-                                          knew_fileError = "";
-                                          pickedFile = null;
+                          Container(
+                              color: (knew_disable)?Colors.transparent:Color(0xFFC54B8C),
+                            child: ElevatedButton(
+                              onPressed: (knew_disable)?null:() {
+                                print("pressed");
+                                if (pickedFile == null || downloadURL == null || downloadURL == "") {
+                                  setState(() {
+                                    knew_fileError = "Please upload Resume";
+                                    delay();
+                                  });
+                            }   else if (knew_formkey.currentState!
+                                        .validate() &&
+                                    knew_ageDiff > 17 &&
+                                    knew_yoexp!="" && knew_degree!=""&&
+                                    kSelectedItems.isNotEmpty &&
+                                    downloadURL != null &&
+                                    knew_dob != null && knew_statusRadiobox!=-1 &&
+                                    ((knew_statusRadiobox != 2)
+                                        ? knew_interviewDate == null
+                                        : knew_interviewDate != null)) {
+                                  print("selectedITems $kSelectedItems");
+                                        _firestore
+                                            .collection("applicants")
+                                            .doc("$knew_email")
+                                            .set({
+                                          'applic_detail': {
+                                            "rollno": knew_rollno.trim().toLowerCase(),
+                                            "name": knew_name.trim().toLowerCase(),
+                                            "college": knew_collegename.trim().toLowerCase(),
+                                            "exp": knew_yoexp,
+                                            "url": downloadURL,
+                                            "degree": knew_degree.trim().toLowerCase(),
+                                            "position": knew_pos.trim().toLowerCase(),
+                                            "phone": knew_ph,
+                                            "email": knew_email.trim().toLowerCase(),
+                                            "passedOut": knew_passedout,
+                                            "age": knew_ageDiff,
+                                            "skills": kSelectedItems,
+                                            "status": knew_statusRadiobox,
+                                            "interviewDate":
+                                                knew_interviewDate ?? null
+                                          }
+                                        }).whenComplete(() {
+                                          setState(() {
+                                            knew_fileError = "";
+                                            pickedFile = null;
+                                          });
+                                          knew_formkey.currentState?.reset();
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      RoutingPage()));
+                                        }).catchError((){
+                                          print("Errorr in catch of submit");
                                         });
-                                        knew_formkey.currentState?.reset();
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    RoutingPage()));
-                                      }).catchError((){
-                                        print("Errorr in catch of submit");
-                                      });
 
-                              } else {
-                                if (knew_statusRadiobox == 2 &&
-                                    knew_interviewDate == null) {
-                                  setState(() {
-                                    knew_fileError = "Enter the interview Date";
-                                    delay();
-                                  });
-                                } else if (knew_statusRadiobox == -1) {
-                                  setState(() {
-                                    knew_fileError =
-                                        "Enter the Interview Status";
-                                    delay();
-                                  });
-                                } else if (knew_dob == null) {
-                                  setState(() {
-                                    knew_fileError = "Enter the dob ";
-                                    delay();
-                                  });
-                                } else if (kSelectedItems.isEmpty) {
-                                  setState(() {
-                                    knew_fileError = "Enter your skills ";
-                                    delay();
-                                  });
-                                } else if (knew_ageDiff < 18) {
-                                  setState(() {
-                                    knew_fileError = "Age should be above 17";
-                                    delay();
-                                  });
                                 } else {
-                                  setState(() {
-                                    knew_fileError =
-                                        "Enter the details properly";
-                                    delay();
-                                  });
+                                  if (knew_statusRadiobox == 2 &&
+                                      knew_interviewDate == null) {
+                                    setState(() {
+                                      knew_fileError = "Enter the interview Date";
+                                      delay();
+                                    });
+                                  } else if (knew_statusRadiobox == -1) {
+                                    setState(() {
+                                      knew_fileError =
+                                          "Enter the Interview Status";
+                                      delay();
+                                    });
+                                  } else if (knew_dob == null) {
+                                    setState(() {
+                                      knew_fileError = "Enter the dob ";
+                                      delay();
+                                    });
+                                  } else if (kSelectedItems.isEmpty) {
+                                    setState(() {
+                                      knew_fileError = "Enter your skills ";
+                                      delay();
+                                    });
+                                  } else if (knew_ageDiff < 18) {
+                                    setState(() {
+                                      knew_fileError = "Age should be above 17";
+                                      delay();
+                                    });
+                                  } else {
+                                    setState(() {
+                                      knew_fileError =
+                                          "Enter the details properly";
+                                      delay();
+                                    });
+                                  }
                                 }
-                              }
-                            },
-                            child: Text("Submit"),
+                              },
+                              child: Text("Submit"),
+                            ),
                           ),
                         ],
                       )),

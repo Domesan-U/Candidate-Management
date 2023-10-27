@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:untitled/routingPage.dart';
 
+import 'NavBar/NavBarWidget.dart';
 import 'headingRejected.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +61,6 @@ setState(() {
 
       setState(() {
         Screen_option;
-        print("Filter $filter");
         filter;
       });
     }
@@ -75,143 +75,147 @@ setState(() {
       setState(() {
         current_applicant;
       });
-      print("called");
     }
     var w = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Color(0xFF202123),
-      body: Row(
+      body: Stack(
         children: [
-          MediaQuery.of(context).size.width > 576
-              ? Row(
-                  children: [
-                    Container(
-                      width: w/2 ,
-                      child: Column(
-                        children: [
-                         HeadingRejected(onPressedH1: (){setState(() {
-                           Screen_option=0;
-
-                           });} ,onPressedH2: (){setState(() {
-                           Screen_option=1;
-
-                         });},onPressedH3: (){setState(() {
-                           Screen_option=2;
-
-                         });} ,),
-                          Row(mainAxisAlignment: MainAxisAlignment.start,
+          Row(
+            children: [
+              MediaQuery.of(context).size.width > 576
+                  ? Row(
+                      children: [
+                        Container(
+                          width: w/2 ,
+                          child: Column(
                             children: [
-                              TextButton(onPressed: _showMultiSelect, child: Text("Apply filters",style: TextStyle(color: Colors.blueAccent),)),
+                             HeadingRejected(onPressedH1: (){setState(() {
+                               Screen_option=0;
+
+                               });} ,onPressedH2: (){setState(() {
+                               Screen_option=1;
+
+                             });},onPressedH3: (){setState(() {
+                               Screen_option=2;
+
+                             });} ,),
+                              Row(mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  TextButton(onPressed: _showMultiSelect, child: Text("Apply filters",style: TextStyle(color: Colors.blueAccent),)),
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom:8.0),
+                                child: Wrap(
+                                  alignment: WrapAlignment.start,
+                                  children: filter
+                                      .map((e) => Chip(
+                                      backgroundColor: Colors.white.withOpacity(0.0),
+                                      deleteIcon: Icon(Icons.cancel),
+                                      onDeleted: () {
+                                        setState(() {
+                                          Screen_option;
+                                          filter.remove(e);
+                                        });
+                                      },
+                                      label: Text(e)))
+                                      .toList(),
+                                ),
+                              ),
+                              SingleChildScrollView(
+                                child: Container(
+                                  width: w/ 2,
+                                  height: (filter.isNotEmpty)?MediaQuery.of(context).size.height * 0.74:MediaQuery.of(context).size.height * 0.84,
+                                 child: FutureBuilderCreated(onTapCreated: (){setState(() {
+                                   current_applicant;
+                                   kFull_appRollno;
+                                });},fn: setter,)),
+                              )
                             ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom:8.0),
-                            child: Wrap(
-                              alignment: WrapAlignment.start,
-                              children: filter
-                                  .map((e) => Chip(
-                                  backgroundColor: Colors.white.withOpacity(0.0),
-                                  deleteIcon: Icon(Icons.cancel),
-                                  onDeleted: () {
-                                    setState(() {
-                                      Screen_option;
-                                      filter.remove(e);
-                                    });
-                                  },
-                                  label: Text(e)))
-                                  .toList(),
-                            ),
-                          ),
-                          SingleChildScrollView(
-                            child: Container(
-                              width: w/ 2,
-                              height: (filter.isNotEmpty)?MediaQuery.of(context).size.height * 0.74:MediaQuery.of(context).size.height * 0.84,
-                             child: FutureBuilderCreated(onTapCreated: (){setState(() {
-                               current_applicant;
-                               kFull_appRollno;
-                            });},fn: setter,)),
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      width: w/2,
-                      child: Column(
-                        children: [
-                          (app_rollno.isNotEmpty)
-                              ? FullDetailPage(
-                                  fullDetailVar:
-                                      app_rollno[current_applicant])
-                              : Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Container(
-                            height: MediaQuery.of(context).size.height-20,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: Colors.white,
-                                  width: 1
-                                )
-                            ),
-                            child: Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Click on candidate to view details',style: TextStyle(color: Colors.white,fontSize: 14),
-                                    ),
-                                  ],
+                        ),
+                        Container(
+                          width: w/2,
+                          child: Column(
+                            children: [
+                              (app_rollno.isNotEmpty)
+                                  ? FullDetailPage(
+                                      fullDetailVar:
+                                          app_rollno[current_applicant])
+                                  : Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Container(
+                                height: MediaQuery.of(context).size.height-20,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                      color: Colors.white,
+                                      width: 1
+                                    )
                                 ),
-                            ),
+                                child: Center(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'Click on candidate to view details',style: TextStyle(color: Colors.white,fontSize: 14),
+                                        ),
+                                      ],
+                                    ),
+                                ),
+                              ),
+                                  )
+                            ],
                           ),
-                              )
-                        ],
-                      ),
-                    )
-                  ],
-                )
-              : Column(
-                  children: [
-                    HeadingRejected(onPressedH1: (){setState(() {
-                      Screen_option=0;
-                    });} ,onPressedH2: (){setState(() {
-                      Screen_option=1;
-                    });},onPressedH3: (){setState(() {
-                      Screen_option=2;
-                    });} ,),
-                    Row(mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        TextButton(onPressed: _showMultiSelect, child: Text("Apply filters",style: TextStyle(color: Colors.blueAccent),)),
+                        )
                       ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom:8.0),
-                      child: Wrap(
-                        alignment: WrapAlignment.start,
-                        children: filter
-                            .map((e) => Chip(
-                            backgroundColor: Colors.white.withOpacity(0.0),
-                            deleteIcon: Icon(Icons.cancel),
-                            onDeleted: () {
-                              setState(() {
-                                Screen_option;
-                                filter.remove(e);
-                              });
-                            },
-                            label: Text(e)))
-                            .toList(),
-                      ),
-                    ),
-
-
-                    SingleChildScrollView(
-                      child: Container(
-                        width: w,
-                        height: (filter.isNotEmpty)?MediaQuery.of(context).size.height * 0.74:MediaQuery.of(context).size.height * 0.84,
-                        child: FutureBuilderCreated()),
                     )
-                  ],
-                )
+                  : Column(
+                      children: [
+                        HeadingRejected(onPressedH1: (){setState(() {
+                          Screen_option=0;
+                        });} ,onPressedH2: (){setState(() {
+                          Screen_option=1;
+                        });},onPressedH3: (){setState(() {
+                          Screen_option=2;
+                        });} ,),
+                        Row(mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            TextButton(onPressed: _showMultiSelect, child: Text("Apply filters",style: TextStyle(color: Colors.blueAccent),)),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom:8.0),
+                          child: Wrap(
+                            alignment: WrapAlignment.start,
+                            children: filter
+                                .map((e) => Chip(
+                                backgroundColor: Colors.white.withOpacity(0.0),
+                                deleteIcon: Icon(Icons.cancel),
+                                onDeleted: () {
+                                  setState(() {
+                                    Screen_option;
+                                    filter.remove(e);
+                                  });
+                                },
+                                label: Text(e)))
+                                .toList(),
+                          ),
+                        ),
+
+
+                        SingleChildScrollView(
+                          child: Container(
+                            width: w,
+                            height: (filter.isNotEmpty)?MediaQuery.of(context).size.height * 0.74:MediaQuery.of(context).size.height * 0.84,
+                            child: FutureBuilderCreated()),
+                        )
+                      ],
+                    )
+            ],
+          ),
+          Align(alignment:Alignment.bottomCenter,child: NavBar())
         ],
       ),
     );
@@ -222,7 +226,6 @@ class FutureBuilderCreated extends StatefulWidget {
   void Function()? onTapCreated;
   void Function()? fn;
   FutureBuilderCreated({this.onTapCreated,this.fn});
-
   @override
   State<FutureBuilderCreated> createState() => _FutureBuilderCreatedState();
 }

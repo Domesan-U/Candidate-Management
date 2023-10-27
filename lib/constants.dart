@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:untitled/UpcomingApplicant.dart' as mf;
 final List<String> kSelectedItems = [];
+GlobalKey<ScaffoldState>? scaffoldKey;
 bool afterUpdateCaller = true;
 bool knew_disable = true;
-
+Color allColor = Colors.black;
 List<Map<String, dynamic>>  kFull_rollnoCopy =[];
 List<Map<String, dynamic>> kFull_appRollno = [];
 TextEditingController knew_ageController = TextEditingController();
@@ -94,7 +95,7 @@ List<Widget> skillWidgets = [];
 int Screen_option = 0;
 String selectedExperience = experience[0];
 String selectedDegree = degrees[0];
-
+Color containerBg = Color(0xFF050A30);
 List<String> experience = [
   'Select Your Experience',
   'No Prior Experience',
@@ -111,3 +112,8 @@ List<String> degrees = [
   'BSc',
   'others',
 ];
+
+Color selectedColor = Color(0xFF002147);
+
+
+

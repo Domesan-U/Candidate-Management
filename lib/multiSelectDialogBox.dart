@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:untitled/constants.dart';
 class MultiSelect extends StatefulWidget {
   var kSelectedItems;
@@ -40,6 +41,7 @@ class _MultiSelectState extends State<MultiSelect> {
               child: ListBody(
                 children: items
                     .map((item) => CheckboxListTile(
+                  activeColor: containerBg,
                   value: widget.kSelectedItems.contains(item),
                   title: Text(item),
                   controlAffinity: ListTileControlAffinity.leading,
@@ -49,13 +51,19 @@ class _MultiSelectState extends State<MultiSelect> {
               ),
             ),
             actions: [
-              TextButton(
-                onPressed: _cancel,
-                child: const Text('Cancel'),
+              Container(
+                color: containerBg,
+                child: TextButton(
+                  onPressed: _cancel,
+                  child: Text('Cancel',style: GoogleFonts.jost(textStyle: TextStyle(color: Colors.white)),),
+                ),
               ),
-              ElevatedButton(
-                onPressed: _submit,
-                child: const Text('Submit'),
+              Container(
+                color: containerBg,
+                child: TextButton(
+                  onPressed: _submit,
+                  child: Text('Submit',style: GoogleFonts.jost(textStyle: TextStyle(color: Colors.white))),
+                ),
               ),
             ],
 
