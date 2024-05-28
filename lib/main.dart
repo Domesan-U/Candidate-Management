@@ -31,7 +31,6 @@ void main() async{
     print("running in web..............");
     WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp(
-      options: FirebaseOptions(apiKey: "AIzaSyB_89GYRwgeMmdxIhLi8OB-dBWiNPAu9KA", appId: "1:912029516841:web:77e05450142b92db5c8838", messagingSenderId: "912029516841", projectId: "hr-rejection",storageBucket: "hr-rejection.appspot.com")
     );
   }
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
