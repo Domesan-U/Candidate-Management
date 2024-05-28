@@ -1,4 +1,4 @@
-# untitled
+# Candidate Management Application
 
 A new Flutter project.
 
