@@ -25,6 +25,7 @@ class _TestingHomeState extends State<TestingHome> {
           Column(
             children: [
               Container(
+
                 height: MediaQuery.of(context).size.height / 2,
                 width: MediaQuery.of(context).size.width,
                 decoration: const BoxDecoration(
@@ -35,8 +36,8 @@ class _TestingHomeState extends State<TestingHome> {
                   child: Column(
                     children: [
                       Image.asset('images/cuteKitty.png',
-                          width: (deviceWidth>800)?deviceWidth/2:400,
-                          height: (deviceWidth>800)?deviceHeight/2:290,)
+                          width: deviceWidth,//(deviceWidth>800)?deviceWidth/2:400,
+                          height: deviceHeight/2)//(deviceWidth>800)?deviceHeight/2:290,)
                     ],
                   ),
                 ),
@@ -141,7 +142,7 @@ class _TestingHomeState extends State<TestingHome> {
             ],
           ),
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(30.0),
             child: Align(alignment: Alignment.topRight,child: IconButton(onPressed: (){scaffoldKey?.currentState?.openDrawer();},icon:Icon(Icons.menu,color: Colors.white,size: 30,))),
           ),
 

@@ -75,13 +75,16 @@ flutter:
   assets:
     - images/
     - images/insta_icon.gif
+    - images/dms.jpg
     - images/facebook.gif
     - images/gmail.gif
     - images/cuteKitty.png
+    - images/DLogo.jpg
     - images/triangle.png
     - images/facebook2.png
     - images/instagram2.png
     - images/filterIcon.png
+    - images/office1.jpg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

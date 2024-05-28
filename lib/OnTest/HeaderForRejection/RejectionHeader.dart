@@ -13,7 +13,7 @@ import '../../shimmer.dart';
 var querySnapshot;
 
 final _firestore = FirebaseFirestore.instance;
-int current_applicant = 0;
+int current_applicant = -1;
 
 List<Map<String, dynamic>> app_rollno = [];
 
@@ -114,7 +114,7 @@ class _HeadingOfRejectionState extends State<HeadingOfRejection> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(15.0),
+                        padding: const EdgeInsets.only(top:45.0),
                         child: Text(
                           "S T O R E  H O U S E",
                           style: GoogleFonts.yesevaOne(

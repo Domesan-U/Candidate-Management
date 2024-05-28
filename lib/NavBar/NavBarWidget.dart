@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:untitled/About/about.dart';
+import 'package:untitled/OnTest/HeaderForRejection/RejectionHeader.dart';
+import 'package:untitled/OnTest/TestingHomePage.dart';
 import 'package:untitled/homepage.dart';
 import 'package:untitled/rejected.dart';
 
@@ -9,60 +12,71 @@ class NavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double iconSize = 20;
     return Container(
-      decoration: BoxDecoration(
-          color: Colors.grey,
-          border: Border.all(color: Colors.white),
-          borderRadius: BorderRadius.circular(20)),
-      width: 200,
+        width: 300,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
               decoration: BoxDecoration(
-                border: Border(right: BorderSide(color: Colors.white)),
+                color: Colors.redAccent,
+                borderRadius: BorderRadius.circular(10)
               ),
               child: IconButton(
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomePage()));
+                      MaterialPageRoute(builder: (context) => TestingHome()));
                 },
                 icon: Icon(
                   Icons.home_filled,
                   color: Colors.white,
+                  size: iconSize
                 ),
               )),
+          SizedBox(width: 10,),
           Container(
               decoration: BoxDecoration(
-                border: Border(right: BorderSide(color: Colors.white)),
+                color: Colors.orange,
+                  borderRadius: BorderRadius.circular(10)
               ),
               child: IconButton(
                 splashColor: Colors.grey,
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>AboutPage()));
                 },
                 icon: Icon(
-                  Icons.close_rounded,
+                  Icons.home_work,
                   color: Colors.white,
+                    size: iconSize
+
                 ),
               )),
+          SizedBox(width: 10,),
+
           Container(
               decoration: BoxDecoration(
-                border: Border(right: BorderSide(color: Colors.white)),
+                color: Colors.purple,
+                  borderRadius: BorderRadius.circular(10)
               ),
               child: IconButton(
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Rejection()));
+                      MaterialPageRoute(builder: (context) => HeadingOfRejection(onPressedH1: (){}, onPressedH2:(){}, onPressedH3: (){})));
                 },
                 icon: Icon(
                   Icons.storage_outlined,
                   color: Colors.white,
+                    size: iconSize
+
                 ),
               )),
+          SizedBox(width: 10,),
+
           Container(
               decoration: BoxDecoration(
-                border: Border(left: BorderSide(color: Colors.white)),
+                color: Colors.deepPurpleAccent,
+                  borderRadius: BorderRadius.circular(10)
               ),
               child: IconButton(
                 onPressed: () {
@@ -70,8 +84,10 @@ class NavBar extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => check()));
                 },
                 icon: Icon(
-                  Icons.add_circle_outline,
+                  Icons.person_add,
                   color: Colors.white,
+                    size: iconSize
+
                 ),
               ))
         ],
